@@ -63,8 +63,8 @@ char *_getenv(char *args, char *env[])
 	/* Iterate over the environment variables until the end */
 	for (; var < find_end_env(env); var++)
 	{
-		if (strcmp(*env, arg) == 0)
-			return (*env + strlen(arg) + 1);
+		if (strcmp(*env, args) == 0)
+			return (*env + strlen(args) + 1);
 	}
 
 	return (NULL);
