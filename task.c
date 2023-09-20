@@ -9,7 +9,7 @@
 void get_sigint(int sig)
 {
 	if (sig == SIGINT)
-		write(STDOUT_FILENO, "\n\\_(^-^)_/ ", 5);
+		write(STDOUT_FILENO, "\n\\_(^-^)_/\n", 12);
 }
 
 /**
