@@ -3,6 +3,8 @@
 /**
  * get_sigint - Handle the crtl + c call in prompt
  * @sig: Signal handler
+ *
+ * Return: void
  */
 void get_sigint(int sig)
 {
@@ -56,8 +58,6 @@ int main(int ac, char **av, char *env[])
 /**
  * execute - executes command
  * @command: command to execute
- * @args: command arguments
- * @envp: environment
  *
  * Return: 0 for success, -1 for failure
  */
