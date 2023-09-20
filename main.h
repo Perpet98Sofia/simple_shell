@@ -137,12 +137,12 @@ char *swap_char(char *input, int bool);
 void add_nodes(sep_list **head_s, line_list **head_l, char *input);
 void go_next(sep_list **list_s, line_list **list_l, data_shell *datash);
 
-char *find_cmd(const char *buffer);
 char *find_executable(char *command, char **envp);
 int _strncmp(char *s1, char *s2, int n);
 char *_strdup(char *str);
 int _strcmp(char *s1, char *s2);
 char *_strcpy(char *dest, char *src);
+char *_strncpy(char *dest, char *src, int n);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_double_ptr(char **str);

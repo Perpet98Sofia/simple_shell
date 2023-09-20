@@ -6,7 +6,7 @@
  * @strg: string to free
  *
  * Return: void
-*/
+ */
 void free_all(char *strng, char *strg)
 {
 	if (strng != NULL)
@@ -67,4 +67,24 @@ char *extract(char *string, int start_index, int end_index)
 	substring[end_index - start_index + 1] = '\0';
 
 	return (substring);
+}
+
+/**
+ * _strncpy - copies a string
+ * @dest: Destination
+ * @src: Source
+ * @n: n as Integer
+ * Return: pointer to the resulting string dest
+ */
+char *_strncpy(char *dest, char *src, int n)
+{
+	int c;
+
+	for (c = 0; c < n && src[c] != '\0'; c++)
+		dest[c] = src[c];
+
+	for (; c < n; c++)
+		dest[c] = '\0';
+
+	return (dest);
 }
