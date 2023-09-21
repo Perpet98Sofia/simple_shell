@@ -25,7 +25,6 @@ int built_in_setenv(data_shell command)
 				strcpy(*var, varname);
 				strcat(*var, "=");
 				strcat(*var, value);
-				free_s(varname, value, new_var, var_cpy);
 				return (0);
 			}
 		}
@@ -41,10 +40,8 @@ int built_in_setenv(data_shell command)
 		*end_env = _strdup(new_var);
 		end_env++;
 		*end_env = NULL;
-		free_s(varname, value, new_var, var_cpy);
 		return (0);
 	}
-	free_s(varname, value, new_var, var_cpy);
 	command.status = -1;
 	get_error(command.args, command.status, command.counter);
 	return (-1);
@@ -125,12 +122,10 @@ int built_in_unsetenv(data_shell command)
 		{
 			*envp = value;
 			command.status = 0;
-			free_s(var, name, value, NULL);
 			return (0);
 		}
 		envp++;
 	}
-	free_s(var, name, value, NULL);
 	command.status = -1;
 
 	return (get_error(command.args, command.status, command.counter));
