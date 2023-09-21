@@ -153,7 +153,6 @@ char *_strncat(char *dest, char *src, int n);
 int execute(data_shell command);
 
 void free_all(char *strng, char *strg);
-void free_s(char *buf, char *buff, char *bufff, char *buffff);
 char *_strrchr(char *str, int c);
 int _strncmp(char *s1, char *s2, int n);
 int _strlen(char *s);
