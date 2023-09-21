@@ -32,13 +32,13 @@
  */
 typedef struct data
 {
-    char *av[MAX_ARGS];
-    char *input;
-    char *args[MAX_ARGS];
-    int status;
-    int counter;
-    char *_environ[MAX_COMMAND_LENGTH];
-    pid_t pid;
+char *av[MAX_ARGS];
+char *input;
+char *args[MAX_ARGS];
+int status;
+int counter;
+char *_environ[MAX_COMMAND_LENGTH];
+pid_t pid;
 } data_shell;
 
 /**
