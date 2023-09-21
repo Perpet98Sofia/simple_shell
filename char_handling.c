@@ -89,29 +89,3 @@ char *_strcpy(char *dest, char *src)
 
 	return (dest);
 }
-
-/**
- * trim - Trim a string
- * @str: the string
- *
- * Return: void
- */
-char *trim(char *str)
-{
-	int start = 0, end = _strlen(str) - 1, i, j = 0;
-	char *trimmed;
-
-	trimmed = malloc(_strlen(str) + 1);
-	if (trimmed == NULL)
-		return (NULL);
-	while (str[start] == ' ')
-		start++;
-	while (end >= start && (str[end] == ' ' || str[end] == '\n'))
-		end--;
-
-	for (i = start; i <= end; i++)
-		trimmed[j++] = str[i];
-	trimmed[j] = '\0';
-
-	return (trimmed);
-}
