@@ -135,12 +135,9 @@ ls_s = ls_s->next;
  */
 int split_commands(data_shell *datash, char *input)
 {
-sep_list *head_s, *list_s;
-line_list *head_l, *list_l;
+sep_list *head_s = NULL, *list_s = NULL;
+line_list *head_l = NULL, *list_l = NULL;
 int loop;
-
-head_s = NULL;
-head_l = NULL;
 
 add_nodes(&head_s, &head_l, input);
 
@@ -186,4 +183,6 @@ token = strtok(NULL, TOK_DELIM);
 tokens++;
 }
 *tokens = NULL;
+
+free(token);
 }

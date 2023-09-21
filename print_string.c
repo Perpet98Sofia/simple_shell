@@ -18,3 +18,18 @@ int print_string(const char *format)
 
 	return (write(1, format, len));
 }
+
+/**
+ * free_s - Frees
+ * @buf: buffer
+ * @buff: buffer
+ * @bufff: buffer
+ * @buffff: buffer
+ * 
+ * Return: nothing
+*/
+void free_s(char *buf, char *buff, char *bufff, char *buffff)
+{
+    free_all(buf, buff);
+	free_all(bufff, buffff);
+}

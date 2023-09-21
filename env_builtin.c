@@ -10,7 +10,7 @@ int built_in_setenv(data_shell command)
 {
 	char **end_env = find_end_env(command._environ);
 	char *varname = command.av[0], *value = command.av[1];
-	char **var = command._environ, *new_var, *var_cpy;
+	char **var = command._environ, *new_var = NULL, *var_cpy = NULL;
 
 	if (varname && value)
 	{
@@ -25,26 +25,26 @@ int built_in_setenv(data_shell command)
 				strcpy(*var, varname);
 				strcat(*var, "=");
 				strcat(*var, value);
+				free_s(varname, value, new_var, var_cpy);
 				return (0);
 			}
 		}
-		/* If the variable name does not exist, create a new entry */
 		new_var = malloc(strlen(varname) + strlen(value) + 2);
 		if (new_var == NULL)
 			return (-1);
 		_strcpy(new_var, varname);
 		_strcat(new_var, "=");
 		_strcat(new_var, value);
-		/* Append the new entry to the environment variables */
 		*end_env = malloc(sizeof(char *) * (size_t)(sizeof(end_env) + 1));
 		if (*end_env == NULL)
 			return (-1);
 		*end_env = _strdup(new_var);
 		end_env++;
 		*end_env = NULL;
+		free_s(varname, value, new_var, var_cpy);
 		return (0);
 	}
-
+	free_s(varname, value, new_var, var_cpy);
 	command.status = -1;
 	get_error(command.args, command.status, command.counter);
 	return (-1);
@@ -66,6 +66,8 @@ char *_getenv(char *args, char *env[])
 		if (_strcmp(*env, args) == 0)
 			return (*env + _strlen(args) + 1);
 	}
+
+	free(var);
 
 	return (NULL);
 }
@@ -123,10 +125,12 @@ int built_in_unsetenv(data_shell command)
 		{
 			*envp = value;
 			command.status = 0;
+			free_s(var, name, value, NULL);
 			return (0);
 		}
 		envp++;
 	}
+	free_s(var, name, value, NULL);
 	command.status = -1;
 
 	return (get_error(command.args, command.status, command.counter));
