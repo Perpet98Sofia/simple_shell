@@ -40,6 +40,8 @@ int main(void)
 		else
 			perror("Fork failed");
 	}
+	if (command != NULL)
+		free(command);
 
 	return (0);
 }
