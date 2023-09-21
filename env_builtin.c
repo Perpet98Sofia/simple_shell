@@ -63,8 +63,8 @@ char *_getenv(char *args, char *env[])
 	/* Iterate over the environment variables until the end */
 	for (; var < find_end_env(env); var++)
 	{
-		if (strcmp(*env, args) == 0)
-			return (*env + strlen(args) + 1);
+		if (_strcmp(*env, args) == 0)
+			return (*env + _strlen(args) + 1);
 	}
 
 	return (NULL);
@@ -97,7 +97,10 @@ int builtin_env(data_shell command)
 	int i;
 
 	for (i = 0; command._environ[i]; i++)
-		printf("%s\n", command._environ[i]);
+	{
+		print_string(command._environ[i]);
+		print_string("\n");
+	}
 
 	return (0);
 }
@@ -114,9 +117,9 @@ int built_in_unsetenv(data_shell command)
 	while (*envp)
 	{
 		name = *envp;
-		value = name + strlen(name) + 1;
-		var = extract(*envp, 0, (int)strlen(command.args[1]) - 1);
-		if (strcmp(var, command.args[1]) == 0)
+		value = name + _strlen(name) + 1;
+		var = extract(*envp, 0, (int)_strlen(command.args[1]) - 1);
+		if (_strcmp(var, command.args[1]) == 0)
 		{
 			*envp = value;
 			command.status = 0;
