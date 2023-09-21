@@ -39,8 +39,6 @@ int main(void)
 			waitpid(pid, &status, 0); /* Wait for the child process to complete */
 		else
 			perror("Fork failed");
-		if (command)
-			free(command);
 	}
 
 	return (0);
