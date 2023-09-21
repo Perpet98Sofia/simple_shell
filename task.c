@@ -7,7 +7,7 @@
 int main(void)
 {
 	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
-	int status;
+	int status, res;
 	size_t buf_size = 0, command_length;
 	char *args[] = { "", NULL}, *command = NULL;
 	pid_t pid;
@@ -29,7 +29,9 @@ int main(void)
 		if (pid == 0)
 		{
 			args[0] = command;
-			execve(command, args, NULL);
+			res = execve(command, args, NULL);
+			if (res == -1)
+				free(command);
 			perror("./shell");
 			exit(1);
 		}
@@ -37,6 +39,8 @@ int main(void)
 			waitpid(pid, &status, 0); /* Wait for the child process to complete */
 		else
 			perror("Fork failed");
+		if (command)
+			free(command);
 	}
 
 	return (0);
