@@ -9,7 +9,7 @@ int main(void)
 	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
 	int status;
 	size_t buf_size = 0, command_length;
-	char *args[] = { "", NULL}, *command;
+	char *args[] = { "", NULL}, *command = NULL;
 	pid_t pid;
 
 	while (1)
