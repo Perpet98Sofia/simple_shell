@@ -1,49 +1,58 @@
 #include "main.h"
 
 /**
- * main - entry point
+ * get_sigint - Handle the crtl + c call in prompt
+ * @sig: Signal handler
+ *
+ * Return: void
+ */
+void get_sigint(int sig)
+{
+	if (sig == SIGINT)
+		write(STDOUT_FILENO, "\n\\_(^-^)_/\n", 12);
+}
+
+/**
+ * main - Entry point
+ * @ac: Arguments count
+ * @av: Arguments
+ * @env: Environment
+ *
  * Return: Always 0
  */
-int main(void)
+int main(int ac, char **av, char *env[])
 {
-	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
-	int status, res;
-	size_t buf_size = 0, command_length;
-	char *args[] = { "", NULL}, *command = NULL;
-	pid_t pid;
+	size_t buf_size = 0;
+	char *command;
+	data_shell data;
+	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)), k = 0;
 
+	UNUSED(ac);
+	set_data(&data, av, env);
+	signal(SIGINT, get_sigint);
 	while (1)
 	{
+		fflush(stdout);
 		if (is_interact)
 			print_string("$ "); /* Display the prompt */
-		fflush(stdout);
-
 		if (getline(&command, &buf_size, stdin) == -1)
-			break; /* Handle Ctrl+D (End of file) */
-
-		command_length = _strlen(command);
-		if (command[command_length - 1] == '\n')
-			command[command_length - 1] = '\0';
-
-		pid = fork(); /* Fork a new process */
-		if (pid == 0)
 		{
-			args[0] = command;
-			res = execve(command, args, NULL);
-			if (res == -1)
+			if (feof(stdin))
 				free(command);
-			perror("./shell");
-			exit(1);
+			break; /* Handle Ctrl+D (End of file) */
 		}
-		else if (pid > 0)
-			waitpid(pid, &status, 0); /* Wait for the child process to complete */
-		else
-			perror("Fork failed");
+		if (_strlen(command) == 1)
+			continue;
+		data.input = _strdup(command);
+		for (; k < MAX_ARGS; k++)
+			data.av[k] = NULL;
+		split_commands(&data, data.input);
+		data.counter++;
 	}
-	if (command != NULL)
-		free(command);
-
-	return (0);
+	free_data(&data);
+	if (data.status < 0)
+		return (255);
+	return (data.status);
 }
 
 /**
