@@ -23,7 +23,7 @@ void get_sigint(int sig)
 int main(int ac, char **av, char *env[])
 {
 	size_t buf_size = 0;
-	char *command;
+	char *command = NULL;
 	data_shell data;
 	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)), k = 0;
 
