@@ -12,6 +12,8 @@ void free_data(data_shell *datash)
 
 	for (i = 0; datash->_environ[i]; i++)
 		free(datash->_environ[i]);
+	for (i = 0; datash->av[i]; i++)
+		free(datash->av[i]);
 	free(datash->input);
 }
 

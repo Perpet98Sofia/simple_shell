@@ -15,13 +15,13 @@ int main(void)
 	while (1)
 	{
 		if (is_interact)
-			printf("$ "); /* Display the prompt */
+			print_string("$ "); /* Display the prompt */
 		fflush(stdout);
 
 		if (getline(&command, &buf_size, stdin) == -1)
 			break; /* Handle Ctrl+D (End of file) */
 
-		command_length = strlen(command);
+		command_length = _strlen(command);
 		if (command[command_length - 1] == '\n')
 			command[command_length - 1] = '\0';
 

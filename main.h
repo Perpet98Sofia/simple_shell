@@ -120,6 +120,7 @@ void split_line(char **tokens, char *input);
 
 char *aux_itoa(int i);
 void get_sigint(int sig);
+int print_string(const char *format);
 
 sep_list *add_sep_node_end(sep_list **head, char sep);
 void free_sep_list(sep_list **head);

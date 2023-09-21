@@ -34,7 +34,7 @@ int main(int ac, char **av, char *env[])
 	{
 		fflush(stdout);
 		if (is_interact)
-			printf("$ "); /* Display the prompt */
+			print_string("$ "); /* Display the prompt */
 		if (getline(&command, &buf_size, stdin) == -1)
 		{
 			if (feof(stdin))
