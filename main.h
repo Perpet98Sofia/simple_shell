@@ -104,10 +104,9 @@ int get_help(data_shell command);
 
 char **find_end_env(char *environ[]);
 char *_getenv(char *arg, char *env[]);
-void cd_to(data_shell command, int *status);
+void cd_to(data_shell *command);
 char *extract(char *string, int start_index, int end_index);
 void update_value(data_shell command, char *varname, char *value);
-char *trim(char *str);
 
 int get_error(char **args, int eval, int counter);
 char *error_path_126(char **args, char *cmd, int counter);
@@ -122,6 +121,7 @@ void split_line(char **tokens, char *input);
 char *aux_itoa(int i);
 void get_sigint(int sig);
 int print_string(const char *format);
+char *removeSpaces(char *strng);
 
 sep_list *add_sep_node_end(sep_list **head, char sep);
 void free_sep_list(sep_list **head);

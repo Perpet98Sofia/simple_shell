@@ -1,41 +1,54 @@
 #include "main.h"
 
-int main(void)
+/**
+ * main - Entry point
+ * @ac: Args count
+ * @av: Args
+ * @env: Environment
+ *
+ * Return: 0 on success, -1 on failure
+ */
+int main(int ac, char **av, char *env[])
 {
-	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
-	int status;
-    size_t buf_size = 0;
-	char *args[] = { "", NULL}, *command = NULL;
+	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)), status;
+	size_t buf_size = 0;
+	pid_t pid;
+	char *args[] = {"", NULL}, *command, *buffer = NULL;
 
-    while (1)
-    {
-        if (is_interact)
-            printf("$ "); /* Display the prompt */
-        fflush(stdout);
-
-        if (getline(&command, &buf_size, stdin) == -1)
-            break; /* Handle Ctrl+D (End of file) */
-
-        size_t command_length = strlen(command);
-        if (command[command_length - 1] == '\n')
-            command[command_length - 1] = '\0';
-		command = trim(command);
-        pid_t pid = fork();  /* Fork a new process */
-
-        if (pid == 0)
-        {
-            args[0] = command;
-            execve(command, args, NULL);
-            perror("./shell");
-            exit(1);
-        }
-        else if (pid > 0)
-            waitpid(pid, &status, 0); /* Wait for the child process to complete */
-        else
-            perror("Fork failed");
-    }
-
-    return 0;
+	UNUSED(av);
+	UNUSED(ac);
+	while (1)
+	{
+		if (is_interact)
+			printf("$ "), fflush(stdout);
+		if (getline(&buffer, &buf_size, stdin) == -1)
+			break;
+		if (buffer[0] != '\n')
+		{
+			if (buffer[strlen(buffer) - 1] == '\n')
+				buffer[strlen(buffer) - 1] = '\0';
+			command = removeSpaces(buffer);
+			if (command)
+			{
+				pid = fork();
+				if (pid == 0)
+				{
+					args[0] = command;
+					if (execve(command, args, env) == -1)
+					{
+						free(command);
+						perror("./shell");
+						exit(1);
+					}
+				}
+				else if (pid > 0)
+					waitpid(pid, &status, 0);
+				free(command);
+			}
+		}
+	}
+	free(buffer);
+	return (0);
 }
 
 /**
@@ -82,30 +95,4 @@ int execute(data_shell command)
 		get_error(command.args, command.status, command.counter);
 	}
 	return (0);
-}
-
-/**
- * trim - Trim a string
- * @str: the string
- *
- * Return: void
- */
-char *trim(char *str)
-{
-    int start = 0, end = _strlen(str) - 1, i, j = 0;
-    char *trimmed;
-
-    trimmed = malloc(_strlen(str) + 1);
-    if (trimmed == NULL)
-        return (NULL);
-    while (str[start] == ' ')
-        start++;
-    while (end >= start && (str[end] == ' ' || str[end] == '\n'))
-        end--;
-
-    for (i = start; i <= end; i++)
-        trimmed[j++] = str[i];
-    trimmed[j] = '\0';
-
-    return (trimmed);
 }
