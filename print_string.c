@@ -46,7 +46,7 @@ char *removeSpaces(char *strng)
 		}
 		i++;
 	}
-	buf[i] = '\0';
+	buf[j] = '\0';
 
 	return (buf);
 }

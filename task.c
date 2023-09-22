@@ -2,63 +2,53 @@
 
 /**
  * main - Entry point
- * @ac: args count
- * @av: args
- * @env: environment
+ * @ac: Args count
+ * @av: Args
+ * @env: Environment
  *
  * Return: 0 on success, -1 on failure
  */
 int main(int ac, char **av, char *env[])
 {
-	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)),
-		status, len;
+	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)), status;
 	size_t buf_size = 0;
 	pid_t pid;
-	char *args[] = { "", NULL}, *command, *buffer = NULL;
+	char *args[] = {"", NULL}, *command, *buffer = NULL;
 
 	UNUSED(av);
 	UNUSED(ac);
 	while (1)
 	{
-		command = malloc(BUFFER_SIZE);
-		if (command == NULL)
-			return (-1);
 		if (is_interact)
-			printf("$ "); /* Display the prompt */
-		fflush(stdout);
+			print_string("$ "), fflush(stdout);
 		if (getline(&buffer, &buf_size, stdin) == -1)
+			break;
+		if (buffer[0] != '\n')
 		{
-			free(buffer);
-			free(command);
-			break; /* Handle Ctrl+D (End of file) */
-		}
-		len = _strlen(buffer);
-		if (buffer[len - 1] == '\n')
-			buffer[len - 1] = '\0';
-		command = removeSpaces(buffer);
-		if (_strlen(command) == 0)
-			continue;
-		pid = fork();  /* Fork a new process */
-		if (pid == 0)
-		{
-			args[0] = command;
-			if (execve(command, args, env) == -1)
+			if (buffer[strlen(buffer) - 1] == '\n')
+				buffer[strlen(buffer) - 1] = '\0';
+			command = removeSpaces(buffer);
+			if (strlen(command) > 0)
 			{
+				pid = fork();
+				if (pid == 0)
+				{
+					args[0] = command;
+					if (execve(command, args, env) == -1)
+					{
+						perror("./shell");
+						exit(1);
+					}
+				}
+				else if (pid > 0)
+					waitpid(pid, &status, 0);
+				else
+					perror("Fork failed");
 				free(command);
-				perror("./shell");
-				exit(1);
 			}
 		}
-		else if (pid > 0)
-			waitpid(pid, &status, 0); /* Wait for the child process to complete */
-		else
-		{
-			perror("Fork failed");
-			free(command);
-			free(buffer);
-		}
-		free(command);
 	}
+	free(buffer);
 	return (0);
 }
 
