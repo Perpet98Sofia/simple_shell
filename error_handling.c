@@ -13,9 +13,9 @@ char *strcat_cd(char **args, char *msg, char *error, char *ver_str)
 	char *illegal_flag;
 
 	_strcpy(error, "./hsh");
-	strncat(error, ": ", 2);
+	strncat(error, ": ", 3);
 	strncat(error, ver_str, strlen(ver_str));
-	strncat(error, ": ", 2);
+	strncat(error, ": ", 3);
 	strncat(error, args[0], strlen(args[0]));
 	strncat(error, msg, strlen(msg));
 
@@ -31,7 +31,7 @@ char *strcat_cd(char **args, char *msg, char *error, char *ver_str)
 	else
 		strncat(error, args[1], strlen(args[1]));
 
-	strncat(error, "\n", 1);
+	strncat(error, "\n", 2);
 	strncat(error, "\0", 1);
 	return (error);
 }
