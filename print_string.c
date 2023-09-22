@@ -48,5 +48,8 @@ char *removeSpaces(char *strng)
 	}
 	buf[j] = '\0';
 
-	return (buf);
+	if (_strlen(buf) > 0)
+		return (buf);
+
+	return (NULL);
 }

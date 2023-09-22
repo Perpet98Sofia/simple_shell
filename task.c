@@ -28,7 +28,7 @@ int main(int ac, char **av, char *env[])
 			if (buffer[strlen(buffer) - 1] == '\n')
 				buffer[strlen(buffer) - 1] = '\0';
 			command = removeSpaces(buffer);
-			if (strlen(command) > 0)
+			if (command)
 			{
 				pid = fork();
 				if (pid == 0)
