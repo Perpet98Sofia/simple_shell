@@ -26,11 +26,12 @@ int cd_shell(data_shell command)
  */
 void cd_to(data_shell command, int *status)
 {
-	char pwd[BUFFER_SIZE], *dir[BUFFER_SIZE];
+	char pwd[BUFFER_SIZE], dir[BUFFER_SIZE];
 
 	getcwd(pwd, sizeof(pwd));
 
-	if (chdir(command.args[1]) == -1)
+	dir = command.args[1];
+	if (chdir(dir) == -1)
 	{
 		command.status = 2;
 		get_error(command.args, command.status, command.counter);
