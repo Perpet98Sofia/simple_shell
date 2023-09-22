@@ -20,7 +20,7 @@ int main(int ac, char **av, char *env[])
 	while (1)
 	{
 		if (is_interact)
-			print_string("$ "), fflush(stdout);
+			printf("$ "), fflush(stdout);
 		if (getline(&buffer, &buf_size, stdin) == -1)
 			break;
 		if (buffer[0] != '\n')
@@ -36,6 +36,7 @@ int main(int ac, char **av, char *env[])
 					args[0] = command;
 					if (execve(command, args, env) == -1)
 					{
+                        free(command);
 						perror("./shell");
 						exit(1);
 					}
@@ -48,7 +49,6 @@ int main(int ac, char **av, char *env[])
 			}
 		}
 	}
-	free(buffer);
 	return (0);
 }
 
