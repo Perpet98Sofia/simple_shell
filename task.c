@@ -47,8 +47,8 @@ int main(int ac, char **av, char *env[])
 					perror("Fork failed");
 				free(command);
 			}
-			free(command);
 		}
+		free(command);
 	}
 	return (0);
 }
