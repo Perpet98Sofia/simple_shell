@@ -19,7 +19,7 @@ int main(void)
 		command_length = strlen(command);
         if (command[command_length - 1] == '\n')
             command[command_length - 1] = '\0';
-		command = trim(command);
+		command = removeSpaces(command);
 
         if (pid == 0)
         {
