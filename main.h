@@ -134,7 +134,7 @@ void _memcpy(void *newptr, const void *ptr, unsigned int size);
 char **_reallocdp(char **ptr, unsigned int old_size, unsigned int new_size);
 
 void free_data(data_shell *datash);
-void set_data(data_shell *datash, char **av, char **environ);
+void set_data(data_shell *datash, char **environ);
 char *swap_char(char *input, int bool);
 void add_nodes(sep_list **head_s, line_list **head_l, char *input);
 void go_next(sep_list **list_s, line_list **list_l, data_shell *datash);

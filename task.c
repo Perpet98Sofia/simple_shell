@@ -1,22 +1,36 @@
 #include "main.h"
 
 /**
+ * get_sigint - Handle the crtl + c call in prompt
+ * @sig: Signal handler
+ *
+ * Return: void
+ */
+void get_sigint(int sig)
+{
+	if (sig == SIGINT)
+		write(STDOUT_FILENO, "\n\\_(^-^)_/\n", 12);
+}
+
+/**
  * main - Entry point
  * @ac: Args count
  * @av: Args
  * @env: Environment
  *
- * Return: 0 on success, -1 on failure
+ * Return: Always 0
  */
 int main(int ac, char **av, char *env[])
 {
-	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)), status;
+	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)), k = 0;
 	size_t buf_size = 0;
-	pid_t pid;
-	char *args[] = {"", NULL}, *command, *buffer = NULL;
+	data_shell data;
+	char *buffer = NULL;
 
 	UNUSED(av);
 	UNUSED(ac);
+	set_data(&data, env);
+	signal(SIGINT, get_sigint);
 	while (1)
 	{
 		if (is_interact)
@@ -25,29 +39,19 @@ int main(int ac, char **av, char *env[])
 			break;
 		if (buffer[0] != '\n')
 		{
-			if (buffer[strlen(buffer) - 1] == '\n')
-				buffer[strlen(buffer) - 1] = '\0';
-			command = removeSpaces(buffer);
-			if (command)
+			data.input = removeSpaces(buffer);
+			for (; k < MAX_ARGS; k++)
+				data.av[k] = NULL;
+			if (data.input)
 			{
-				pid = fork();
-				if (pid == 0)
-				{
-					args[0] = command;
-					if (execve(command, args, env) == -1)
-					{
-						free(command);
-						perror("./shell");
-						exit(1);
-					}
-				}
-				else if (pid > 0)
-					waitpid(pid, &status, 0);
-				free(command);
+				split_commands(&data, data.input);
+				data.counter++;
+				free(data.input);
 			}
 		}
 	}
 	free(buffer);
+
 	return (0);
 }
 
