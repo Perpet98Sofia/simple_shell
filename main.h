@@ -144,19 +144,15 @@ int _strncmp(char *s1, char *s2, int n);
 char *_strdup(char *str);
 int _strcmp(char *s1, char *s2);
 char *_strcpy(char *dest, char *src);
-char *_strncpy(char *dest, char *src, int n);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_double_ptr(char **str);
-char *_strcat(char *dest, char *src);
-char *_strncat(char *dest, char *src, int n);
 
 int execute(data_shell command);
 
 void free_all(char *strng, char *strg);
 char *_strrchr(char *str, int c);
 int _strncmp(char *s1, char *s2, int n);
-int _strlen(char *s);
 int is_digit(char c);
 int is_number(char *c);
 

@@ -36,7 +36,7 @@ char *_strdup(char *str)
 	if (str == NULL) /* validate str input */
 		return (NULL);
 
-	len = _strlen(str) + 1;
+	len = strlen(str) + 1;
 	duplicate_str = malloc(sizeof(char) * len);
 	if (duplicate_str == NULL)
 		return (NULL);

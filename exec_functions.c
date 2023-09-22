@@ -23,8 +23,8 @@ char *find_executable(char *command, char **envp)
 		token = strtok(_strdup(path_env), ":");
 		while (token)
 		{
-			token_len = _strlen(token);
-			command_len = _strlen(command);
+			token_len = strlen(token);
+			command_len = strlen(command);
 			full_path = malloc(token_len + command_len + 2);
 			if (full_path)
 			{
