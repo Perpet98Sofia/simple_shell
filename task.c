@@ -36,15 +36,13 @@ int main(int ac, char **av, char *env[])
 					args[0] = command;
 					if (execve(command, args, env) == -1)
 					{
-                        free(command);
+						free(command);
 						perror("./shell");
 						exit(1);
 					}
 				}
 				else if (pid > 0)
 					waitpid(pid, &status, 0);
-				else
-					perror("Fork failed");
 				free(command);
 			}
 		}
