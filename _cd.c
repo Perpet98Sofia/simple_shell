@@ -26,11 +26,10 @@ int cd_shell(data_shell command)
  */
 void cd_to(data_shell *command)
 {
-	char *pwd, *dir;
+	char *pwd = NULL, *dir = NULL;
 
 	getcwd(pwd, sizeof(pwd));
 
-	dir = command->args[1];
 	if (chdir(command->args[1]) == -1)
 	{
 		command->status = 2;
