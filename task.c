@@ -27,26 +27,31 @@ int main(int ac, char **av, char *env[])
 			printf("$ "); /* Display the prompt */
 		fflush(stdout);
 		if (getline(&buffer, &buf_size, stdin) == -1)
+		{
+			free(command);
 			break; /* Handle Ctrl+D (End of file) */
+		}
+		len = _strlen(buffer);
+		if (buffer[len - 1] == '\n')
+			buffer[len - 1] = '\0';
 		command = removeSpaces(buffer);
-		len = strlen(command);
-		if (len == 0)
-			continue;
-		if (command[len - 1] == '\n')
-			command[len - 1] = '\0';
-
 		pid = fork();  /* Fork a new process */
 		if (pid == 0)
 		{
 			args[0] = command;
-			execve(command, args, env);
-			perror("./shell");
-			exit(1);
+			if (execve(command, args, env) == -1)
+			{
+				perror("./shell");
+				exit(1);
+			}
 		}
 		else if (pid > 0)
 			waitpid(pid, &status, 0); /* Wait for the child process to complete */
 		else
+		{
 			perror("Fork failed");
+			free(command);
+		}
 		free(command);
 	}
 	return (0);
@@ -96,30 +101,4 @@ int execute(data_shell command)
 		get_error(command.args, command.status, command.counter);
 	}
 	return (0);
-}
-
-/**
- * trim - Trim a string
- * @str: the string
- *
- * Return: void
- */
-char *trim(char *str)
-{
-	int start = 0, end = _strlen(str) - 1, i, j = 0;
-	char *trimmed;
-
-	trimmed = malloc(_strlen(str) + 1);
-	if (trimmed == NULL)
-		return (NULL);
-	while (str[start] == ' ')
-		start++;
-	while (end >= start && (str[end] == ' ' || str[end] == '\n'))
-		end--;
-
-	for (i = start; i <= end; i++)
-		trimmed[j++] = str[i];
-	trimmed[j] = '\0';
-
-	return (trimmed);
 }
