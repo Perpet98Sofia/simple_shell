@@ -107,6 +107,7 @@ char *_getenv(char *arg, char *env[]);
 void cd_to(data_shell command, int *status);
 char *extract(char *string, int start_index, int end_index);
 void update_value(data_shell command, char *varname, char *value);
+char *trim(char *str);
 
 int get_error(char **args, int eval, int counter);
 char *error_path_126(char **args, char *cmd, int counter);

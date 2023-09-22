@@ -1,58 +1,41 @@
 #include "main.h"
 
-/**
- * get_sigint - Handle the crtl + c call in prompt
- * @sig: Signal handler
- *
- * Return: void
- */
-void get_sigint(int sig)
+int main(void)
 {
-	if (sig == SIGINT)
-		write(STDOUT_FILENO, "\n\\_(^-^)_/\n", 12);
-}
+	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
+	int status;
+    size_t buf_size = 0;
+	char *args[] = { "", NULL}, *command = NULL;
 
-/**
- * main - Entry point
- * @ac: Arguments count
- * @av: Arguments
- * @env: Environment
- *
- * Return: Always 0
- */
-int main(int ac, char **av, char *env[])
-{
-	size_t buf_size = 0;
-	char *command = NULL;
-	data_shell data;
-	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)), k = 0;
+    while (1)
+    {
+        if (is_interact)
+            printf("$ "); /* Display the prompt */
+        fflush(stdout);
 
-	UNUSED(ac);
-	set_data(&data, av, env);
-	signal(SIGINT, get_sigint);
-	while (1)
-	{
-		fflush(stdout);
-		if (is_interact)
-			print_string("$ "); /* Display the prompt */
-		if (getline(&command, &buf_size, stdin) == -1)
-		{
-			if (feof(stdin))
-				free(command);
-			break; /* Handle Ctrl+D (End of file) */
-		}
-		if (_strlen(command) == 1)
-			continue;
-		data.input = _strdup(command);
-		for (; k < MAX_ARGS; k++)
-			data.av[k] = NULL;
-		split_commands(&data, data.input);
-		data.counter++;
-	}
-	free_data(&data);
-	if (data.status < 0)
-		return (255);
-	return (data.status);
+        if (getline(&command, &buf_size, stdin) == -1)
+            break; /* Handle Ctrl+D (End of file) */
+
+        size_t command_length = strlen(command);
+        if (command[command_length - 1] == '\n')
+            command[command_length - 1] = '\0';
+		command = trim(command);
+        pid_t pid = fork();  /* Fork a new process */
+
+        if (pid == 0)
+        {
+            args[0] = command;
+            execve(command, args, NULL);
+            perror("./shell");
+            exit(1);
+        }
+        else if (pid > 0)
+            waitpid(pid, &status, 0); /* Wait for the child process to complete */
+        else
+            perror("Fork failed");
+    }
+
+    return 0;
 }
 
 /**
@@ -99,4 +82,30 @@ int execute(data_shell command)
 		get_error(command.args, command.status, command.counter);
 	}
 	return (0);
+}
+
+/**
+ * trim - Trim a string
+ * @str: the string
+ *
+ * Return: void
+ */
+char *trim(char *str)
+{
+    int start = 0, end = _strlen(str) - 1, i, j = 0;
+    char *trimmed;
+
+    trimmed = malloc(_strlen(str) + 1);
+    if (trimmed == NULL)
+        return (NULL);
+    while (str[start] == ' ')
+        start++;
+    while (end >= start && (str[end] == ' ' || str[end] == '\n'))
+        end--;
+
+    for (i = start; i <= end; i++)
+        trimmed[j++] = str[i];
+    trimmed[j] = '\0';
+
+    return (trimmed);
 }
