@@ -26,20 +26,10 @@ void free_data(data_shell *datash)
  *
  * Return: no return
  */
-void set_data(data_shell *datash, char **av, char **environ)
+void set_data(data_shell *datash, char **environ)
 {
 	unsigned int i = 0;
 
-	if (av)
-	{
-		for (; av[i]; i++)
-			datash->av[i] = av[i];
-	}
-	else
-	{
-		for (; i < MAX_ARGS; i++)
-			datash->av[i] = NULL;
-	}
 	while (i < MAX_ARGS)
 	{
 		datash->args[i] = NULL;

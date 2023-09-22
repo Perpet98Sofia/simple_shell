@@ -28,7 +28,7 @@ int main(int ac, char **av, char *env[])
 	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)), k = 0;
 
 	UNUSED(ac);
-	set_data(&data, av, env);
+	set_data(&data, env);
 	signal(SIGINT, get_sigint);
 	while (1)
 	{
