@@ -28,6 +28,7 @@ int main(int ac, char **av, char *env[])
 		fflush(stdout);
 		if (getline(&buffer, &buf_size, stdin) == -1)
 		{
+			free(buffer);
 			free(command);
 			break; /* Handle Ctrl+D (End of file) */
 		}
@@ -35,6 +36,8 @@ int main(int ac, char **av, char *env[])
 		if (buffer[len - 1] == '\n')
 			buffer[len - 1] = '\0';
 		command = removeSpaces(buffer);
+		if (_strlen(command) == 0)
+			continue;
 		pid = fork();  /* Fork a new process */
 		if (pid == 0)
 		{
@@ -52,6 +55,7 @@ int main(int ac, char **av, char *env[])
 		{
 			perror("Fork failed");
 			free(command);
+			free(buffer);
 		}
 		free(command);
 	}
