@@ -104,7 +104,7 @@ int get_help(data_shell command);
 
 char **find_end_env(char *environ[]);
 char *_getenv(char *arg, char *env[]);
-void cd_to(data_shell *datash);
+void cd_to(data_shell command, int *status);
 char *extract(char *string, int start_index, int end_index);
 void update_value(data_shell command, char *varname, char *value);
 
