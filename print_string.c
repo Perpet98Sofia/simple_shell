@@ -27,15 +27,25 @@ int print_string(const char *format)
 */
 char *removeSpaces(char *strng)
 {
-	int i;
+	int i = 0, j = 0;
 	char *buf;
 
-	buf = malloc(sizeof(char) * strlen(strng));
+	if (strng == NULL)
+		return (NULL);
+
+	buf = malloc(strlen(strng) + 1);
 	if (buf == NULL)
 		return (NULL);
 
-	for (i = 0; strng[i] != ' ' && strng[i] != '\0'; i++)
-		buf[i] = strng[i];
+	while (strng[i] != '\0')
+	{
+		if (strng[i] != ' ')
+		{
+			buf[j] = strng[i];
+			j++;
+		}
+		i++;
+	}
 	buf[i] = '\0';
 
 	return (buf);
