@@ -48,9 +48,8 @@ int main(int ac, char **av, char *env[])
 				free(command);
 			}
 		}
-		if (command)
-			free(command);
 	}
+	free(command);
 	return (0);
 }
 
