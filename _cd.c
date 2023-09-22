@@ -36,7 +36,7 @@ void cd_to(data_shell command, int *status)
 		get_error(command.args, command.status, command.counter);
 		return;
 	}
-	getcwd(dir, sizeof(dir));
+	getcwd(dir, BUFFER_SIZE);
 
 	update_value(command, "PWD", dir);
 	update_value(command, "OLDPWD", pwd);
