@@ -26,7 +26,7 @@ int cd_shell(data_shell command)
  */
 void cd_to(data_shell command, int *status)
 {
-	char pwd[BUFFER_SIZE], *dir[BUFFER_SIZE];
+	char pwd[BUFFER_SIZE], dir[BUFFER_SIZE];
 
 	getcwd(pwd, sizeof(pwd));
 

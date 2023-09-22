@@ -4,7 +4,8 @@ int main(void)
 {
 	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
 	int status;
-    size_t buf_size = 0;
+    size_t buf_size = 0, command_length;
+	pid_t pid = fork();  /* Fork a new process */
 	char *args[] = { "", NULL}, *command = NULL;
 
     while (1)
@@ -15,12 +16,10 @@ int main(void)
 
         if (getline(&command, &buf_size, stdin) == -1)
             break; /* Handle Ctrl+D (End of file) */
-
-        size_t command_length = strlen(command);
+		command_length = strlen(command);
         if (command[command_length - 1] == '\n')
             command[command_length - 1] = '\0';
 		command = trim(command);
-        pid_t pid = fork();  /* Fork a new process */
 
         if (pid == 0)
         {
