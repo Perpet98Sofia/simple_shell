@@ -30,13 +30,14 @@ void cd_to(data_shell command, int *status)
 
 	getcwd(pwd, sizeof(pwd));
 
-	if (chdir(command.args[1]) == -1)
+	dir = command.args[1];
+	if (chdir(dir) == -1)
 	{
 		command.status = 2;
 		get_error(command.args, command.status, command.counter);
 		return;
 	}
-	getcwd(dir, sizeof(dir));
+	getcwd(dir, BUFFER_SIZE);
 
 	update_value(command, "PWD", dir);
 	update_value(command, "OLDPWD", pwd);
