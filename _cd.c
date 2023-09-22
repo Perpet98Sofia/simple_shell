@@ -20,7 +20,6 @@ int cd_shell(data_shell command)
  * cd_to - changes to a directory given
  * by the user
  * @command: Command
- * @status: integer used to keep track of shell status
  *
  * Return: no return
  */

@@ -41,6 +41,7 @@ int main(int ac, char **av, char *env[])
 			args[0] = command;
 			if (execve(command, args, env) == -1)
 			{
+				free(command);
 				perror("./shell");
 				exit(1);
 			}
