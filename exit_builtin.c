@@ -16,7 +16,6 @@ int built_in_exit(data_shell command)
 		if (status != 0)
 		{
 			free_data(&command);
-			free(command.input);
 			exit(status);
 		}
 		else
@@ -29,7 +28,6 @@ int built_in_exit(data_shell command)
 	else
 	{
 		free_data(&command);
-		free(command.input);
 		exit(0);
 	}
 	return (0);
