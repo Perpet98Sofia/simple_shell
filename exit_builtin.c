@@ -28,7 +28,7 @@ int built_in_exit(data_shell command)
 	else
 	{
 		free_data(&command);
-		exit(0);
+		exit(command.status);
 	}
 	return (0);
 }
