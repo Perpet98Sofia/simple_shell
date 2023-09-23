@@ -22,7 +22,8 @@ void get_sigint(int sig)
  */
 int main(int ac, char **av, char *env[])
 {
-	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)), k = 0;
+	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)),
+		k = 0, i = 0;
 	size_t buf_size = 0;
 	data_shell data;
 	char *buffer = NULL;
@@ -46,8 +47,8 @@ int main(int ac, char **av, char *env[])
 			data.counter++;
 		}
 	}
-	for (i = 0; datash->_environ[i]; i++)
-		free(datash->_environ[i]);
+	for (i = 0; data._environ[i]; i++)
+		free(data._environ[i]);
 	free(buffer);
 
 	return (0);

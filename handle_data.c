@@ -21,7 +21,6 @@ void free_data(data_shell *datash)
  * set_data - Initialize data structure
  *
  * @datash: data structure
- * @av: argument vector
  * @environ: Environment
  *
  * Return: no return
