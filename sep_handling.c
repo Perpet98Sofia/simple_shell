@@ -149,7 +149,6 @@ while (list_l != NULL)
 datash->input = _strdup(list_l->line);
 split_line(datash->args, datash->input);
 loop = get_builtin(*datash);
-free(datash->input);
 
 go_next(&list_s, &list_l, datash);
 

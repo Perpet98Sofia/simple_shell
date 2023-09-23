@@ -42,8 +42,8 @@ int main(int ac, char **av, char *env[])
 			for (; k < MAX_ARGS; k++)
 				data.av[k] = NULL;
 			split_commands(&data, buffer);
-			data.counter++;
 			free(data.input);
+			data.counter++;
 		}
 	}
 	free_data(&data);
