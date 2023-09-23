@@ -22,15 +22,16 @@ void get_sigint(int sig)
  */
 int main(int ac, char **av, char *env[])
 {
-	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)), k = 0;
+	int is_interact = (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO)),
+		k = 0, i = 0;
 	size_t buf_size = 0;
 	data_shell data;
 	char *buffer = NULL;
 
 	UNUSED(av);
 	UNUSED(ac);
-	set_data(&data, env);
 	signal(SIGINT, get_sigint);
+	set_data(&data, env);
 	while (1)
 	{
 		if (is_interact)
@@ -39,17 +40,15 @@ int main(int ac, char **av, char *env[])
 			break;
 		if (buffer[0] != '\n')
 		{
-			data.input = removeSpaces(buffer);
 			for (; k < MAX_ARGS; k++)
 				data.av[k] = NULL;
-			if (data.input)
-			{
-				split_commands(&data, data.input);
-				data.counter++;
-				free(data.input);
-			}
+			split_commands(&data, buffer);
+			free_data(&data);
+			data.counter++;
 		}
 	}
+	for (i = 0; data._environ[i]; i++)
+		free(data._environ[i]);
 	free(buffer);
 
 	return (0);
@@ -64,7 +63,7 @@ int main(int ac, char **av, char *env[])
 int execute(data_shell command)
 {
 	int status, found = 0;
-	char *exec;
+	char *exec = NULL;
 
 	if (access(command.args[0], X_OK) == 0)
 		found = 1;
@@ -75,6 +74,7 @@ int execute(data_shell command)
 		{
 			found = 1;
 			command.args[0] = _strdup(exec);
+			free(exec);
 		}
 	}
 	if (found == 1)

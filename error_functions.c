@@ -22,11 +22,11 @@ char *error_get_cd(char **args, char *cmd, int counter)
 	else
 	{
 		msg = ": can't cd to ";
-		len_id = _strlen(args[1]);
+		len_id = strlen(args[1]);
 	}
 
-	length = _strlen(cmd) + _strlen(args[0]);
-	length += _strlen(ver_str) + _strlen(msg) + len_id + 5;
+	length = strlen(cmd) + strlen(args[0]);
+	length += strlen(ver_str) + strlen(msg) + len_id + 5;
 	error = malloc(sizeof(char) * (length + 1));
 	if (error == NULL) /* Change error check from '0' to 'NULL' for clarity. */
 	{
@@ -52,7 +52,7 @@ char *error_not_found(char **args, char *cmd, int counter)
 	char *ver_str;
 
 	ver_str = aux_itoa(counter);
-	length = _strlen(cmd) + _strlen(ver_str) + _strlen(args[0]) + 16;
+	length = strlen(cmd) + strlen(ver_str) + strlen(args[0]) + 16;
 	error = malloc(sizeof(char) * (length + 1));
 
 	if (error == NULL) /* Use NULL for clarity instead of '0' */
@@ -62,12 +62,11 @@ char *error_not_found(char **args, char *cmd, int counter)
 	}
 
 	_strcpy(error, "./hsh");
-	_strncat(error, ": ", 2);
-	_strncat(error, ver_str, _strlen(ver_str));
-	_strncat(error, ": ", 2);
-	_strncat(error, args[0], _strlen(args[0]));
-	_strncat(error, ": not found\n", 12);
-	_strncat(error, "\0", 1);
+	strncat(error, ": ", 3);
+	strncat(error, ver_str, strlen(ver_str));
+	strncat(error, ": ", 3);
+	strncat(error, args[0], strlen(args[0]));
+	strncat(error, ": not found\n", 13);
 
 	free(ver_str);
 
@@ -88,8 +87,8 @@ char *error_exit_shell(char **args, char *cmd, int counter)
 	char *ver_str;
 
 	ver_str = aux_itoa(counter);
-	length = _strlen(cmd) + _strlen(ver_str) + _strlen(args[0]) +
-			 _strlen(args[1]) + 23;
+	length = strlen(cmd) + strlen(ver_str) + strlen(args[0]) +
+			 strlen(args[1]) + 23;
 	error = malloc(sizeof(char) * (length + 1));
 
 	if (error == NULL) /* Using NULL for clarity instead of '0'*/
@@ -99,14 +98,13 @@ char *error_exit_shell(char **args, char *cmd, int counter)
 	}
 
 	_strcpy(error, "./hsh");
-	_strncat(error, ": ", 2);
-	_strncat(error, ver_str, _strlen(ver_str));
-	_strncat(error, ": ", 2);
-	_strncat(error, args[0], _strlen(args[0]));
-	_strncat(error, ": Illegal number: ", 19);
-	_strncat(error, args[1], _strlen(args[1]));
-	_strncat(error, "\n", 1);
-	_strncat(error, "\0", 1);
+	strncat(error, ": ", 3);
+	strncat(error, ver_str, strlen(ver_str));
+	strncat(error, ": ", 3);
+	strncat(error, args[0], strlen(args[0]));
+	strncat(error, ": Illegal number: ", 19);
+	strncat(error, args[1], strlen(args[1]));
+	strncat(error, "\n", 3);
 
 	free(ver_str);
 
@@ -125,14 +123,12 @@ char *error_env(char **args, char *cmd, int counter)
 	int length;
 	char *error;
 	char *ver_str;
-	char *msg;
+	char *msg = ": Unable to add/remove from environment\n";
 
 	ver_str = aux_itoa(counter);
-	msg = ": Unable to add/remove from environment\n";
-	length = _strlen(cmd) + _strlen(ver_str) + _strlen(args[0]) +
-			_strlen(msg) + 4;
+	length = strlen(cmd) + strlen(ver_str) + strlen(args[0]) +
+			strlen(msg) + 4;
 	error = malloc(sizeof(char) * (length + 1));
-
 	if (error == NULL) /* Using NULL for clarity instead of '0'. */
 	{
 		/* If error is NULL (malloc failed), there's no need to free it. */
@@ -141,12 +137,11 @@ char *error_env(char **args, char *cmd, int counter)
 	}
 
 	_strcpy(error, "./hsh");
-	_strncat(error, ": ", 2);
-	_strncat(error, ver_str, _strlen(ver_str));
-	_strncat(error, ": ", 2);
-	_strncat(error, args[0], _strlen(args[0]));
-	_strncat(error, msg, _strlen(msg));
-	_strncat(error, "\0", 1);
+	strncat(error, ": ", 3);
+	strncat(error, ver_str, strlen(ver_str));
+	strncat(error, ": ", 3);
+	strncat(error, args[0], strlen(args[0]));
+	strncat(error, msg, strlen(msg));
 
 	free(ver_str);
 
@@ -169,7 +164,7 @@ char *error_path_126(char **args, char *cmd, int counter)
 	char *error;
 
 	ver_str = aux_itoa(counter);
-	length = _strlen(cmd) + _strlen(ver_str) + _strlen(args[0]) + 24;
+	length = strlen(cmd) + strlen(ver_str) + strlen(args[0]) + 24;
 	error = malloc(sizeof(char) * (length + 1));
 
 	if (error == NULL) /* Using NULL for clarity instead of '0'. */
@@ -180,12 +175,11 @@ char *error_path_126(char **args, char *cmd, int counter)
 	}
 
 	_strcpy(error, "./hsh");
-	_strncat(error, ": ", 2);
-	_strncat(error, ver_str, _strlen(ver_str));
-	_strncat(error, ": ", 2);
-	_strncat(error, args[0], _strlen(args[0]));
-	_strncat(error, ": Permission denied\n", 24);
-	_strncat(error, "\0", 1);
+	strncat(error, ": ", 3);
+	strncat(error, ver_str, strlen(ver_str));
+	strncat(error, ": ", 3);
+	strncat(error, args[0], strlen(args[0]));
+	strncat(error, ": Permission denied\n", 24);
 
 	free(ver_str);
 

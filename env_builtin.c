@@ -32,8 +32,8 @@ int built_in_setenv(data_shell command)
 		if (new_var == NULL)
 			return (-1);
 		_strcpy(new_var, varname);
-		_strcat(new_var, "=");
-		_strcat(new_var, value);
+		strcat(new_var, "=");
+		strcat(new_var, value);
 		*end_env = malloc(sizeof(char *) * (size_t)(sizeof(end_env) + 1));
 		if (*end_env == NULL)
 			return (-1);
@@ -61,7 +61,7 @@ char *_getenv(char *args, char *env[])
 	for (; var < find_end_env(env); var++)
 	{
 		if (_strcmp(*env, args) == 0)
-			return (*env + _strlen(args) + 1);
+			return (*env + strlen(args) + 1);
 	}
 
 	free(var);
@@ -116,8 +116,8 @@ int built_in_unsetenv(data_shell command)
 	while (*envp)
 	{
 		name = *envp;
-		value = name + _strlen(name) + 1;
-		var = extract(*envp, 0, (int)_strlen(command.args[1]) - 1);
+		value = name + strlen(name) + 1;
+		var = extract(*envp, 0, (int)strlen(command.args[1]) - 1);
 		if (_strcmp(var, command.args[1]) == 0)
 		{
 			*envp = value;

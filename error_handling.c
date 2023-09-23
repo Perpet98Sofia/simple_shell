@@ -13,11 +13,11 @@ char *strcat_cd(char **args, char *msg, char *error, char *ver_str)
 	char *illegal_flag;
 
 	_strcpy(error, "./hsh");
-	_strncat(error, ": ", 2);
-	_strncat(error, ver_str, _strlen(ver_str));
-	_strncat(error, ": ", 2);
-	_strncat(error, args[0], _strlen(args[0]));
-	_strncat(error, msg, _strlen(msg));
+	strncat(error, ": ", 3);
+	strncat(error, ver_str, strlen(ver_str));
+	strncat(error, ": ", 3);
+	strncat(error, args[0], strlen(args[0]));
+	strncat(error, msg, strlen(msg));
 
 	if (args[1][0] == '-')
 	{
@@ -25,14 +25,14 @@ char *strcat_cd(char **args, char *msg, char *error, char *ver_str)
 		illegal_flag[0] = '-';
 		illegal_flag[1] = args[1][1];
 		illegal_flag[2] = '\0';
-		_strncat(error, illegal_flag, _strlen(illegal_flag));
+		strncat(error, illegal_flag, strlen(illegal_flag));
 		free(illegal_flag);
 	}
 	else
-		_strncat(error, args[1], _strlen(args[1]));
+		strncat(error, args[1], strlen(args[1]));
 
-	_strncat(error, "\n", 1);
-	_strncat(error, "\0", 1);
+	strncat(error, "\n", 2);
+	strncat(error, "\0", 1);
 	return (error);
 }
 
@@ -72,7 +72,7 @@ int get_error(char **args, int eval, int counter)
 
 	if (error)
 	{
-		write(STDERR_FILENO, error, _strlen(error));
+		printf("%s", error);
 		free(error);
 	}
 

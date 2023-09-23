@@ -37,7 +37,7 @@ char *removeSpaces(char *strng)
 	if (buf == NULL)
 		return (NULL);
 
-	while (strng[i] != '\0')
+	while (strng[i + 1] != '\0')
 	{
 		if (strng[i] != ' ')
 		{
@@ -48,7 +48,7 @@ char *removeSpaces(char *strng)
 	}
 	buf[j] = '\0';
 
-	if (_strlen(buf) > 0)
+	if (strlen(buf) > 0)
 		return (buf);
 
 	return (NULL);

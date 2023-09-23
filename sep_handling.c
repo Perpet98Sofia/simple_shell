@@ -183,6 +183,4 @@ token = strtok(NULL, TOK_DELIM);
 tokens++;
 }
 *tokens = NULL;
-
-free(token);
 }
