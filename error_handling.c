@@ -47,7 +47,6 @@ char *strcat_cd(char **args, char *msg, char *error, char *ver_str)
 int get_error(char **args, int eval, int counter)
 {
 	char *error = NULL;
-	size_t len;
 
 	switch (eval)
 	{
