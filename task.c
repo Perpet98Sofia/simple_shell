@@ -30,26 +30,26 @@ int main(int ac, char **av, char *env[])
 	UNUSED(av);
 	UNUSED(ac);
 	signal(SIGINT, get_sigint);
+	set_data(&data, env);
 	while (1)
 	{
-		set_data(&data, env);
 		if (is_interact)
 			printf("$ "), fflush(stdout);
 		if (getline(&buffer, &buf_size, stdin) == -1)
 			break;
 		if (buffer[0] != '\n')
 		{
-			data.input = _strdup(buffer);
 			for (; k < MAX_ARGS; k++)
 				data.av[k] = NULL;
 			if (data.input)
 			{
 				split_commands(&data, data.input);
 				data.counter++;
-				free_data(&data);
+				free(data.input);
 			}
 		}
 	}
+	free_data(&data);
 	free(buffer);
 
 	return (0);

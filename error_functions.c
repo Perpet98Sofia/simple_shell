@@ -123,10 +123,9 @@ char *error_env(char **args, char *cmd, int counter)
 	int length;
 	char *error;
 	char *ver_str;
-	char *msg;
+	char *msg = ": Unable to add/remove from environment\n";
 
 	ver_str = aux_itoa(counter);
-	msg = ": Unable to add/remove from environment\n";
 	length = strlen(cmd) + strlen(ver_str) + strlen(args[0]) +
 			strlen(msg) + 4;
 	error = malloc(sizeof(char) * (length + 1));

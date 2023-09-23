@@ -72,7 +72,7 @@ int get_error(char **args, int eval, int counter)
 
 	if (error)
 	{
-		printf("%s\n", error);
+		printf("%s", error);
 		free(error);
 	}
 
