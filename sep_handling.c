@@ -146,7 +146,7 @@ list_l = head_l;
 
 while (list_l != NULL)
 {
-datash->input = _strdup(list_l->line);
+datash->input = strdup(list_l->line);
 split_line(datash->args, datash->input);
 loop = get_builtin(*datash);
 
@@ -178,7 +178,7 @@ char *token;
 token = strtok(input, TOK_DELIM);
 while (token != NULL)
 {
-*tokens = _strdup(token);
+*tokens = strdup(token);
 token = strtok(NULL, TOK_DELIM);
 tokens++;
 }

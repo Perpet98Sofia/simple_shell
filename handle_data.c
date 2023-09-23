@@ -38,12 +38,7 @@ void set_data(data_shell *datash, char **environ)
 	datash->counter = 1;
 
 	for (i = 0; environ[i]; i++)
-	;
-
-	*datash->_environ = malloc(sizeof(char *) * (i + 1));
-
-	for (i = 0; environ[i]; i++)
-		datash->_environ[i] = _strdup(environ[i]);
+		datash->_environ[i] = strdup(environ[i]);
 	for (; i < 100; i++)
 		datash->_environ[i] = NULL;
 

@@ -37,8 +37,8 @@ void update_value(data_shell command, char *varname, char *value)
 {
 	int k;
 
-	command.av[0] = _strdup(varname);
-	command.av[1] = _strdup(value);
+	command.av[0] = strdup(varname);
+	command.av[1] = strdup(value);
 	command.av[2] = NULL;
 
 	built_in_setenv(command);

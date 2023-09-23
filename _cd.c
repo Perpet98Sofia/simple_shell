@@ -9,7 +9,7 @@
 int cd_shell(data_shell command)
 {
 	if (command.args[1] == NULL)
-		command.args[1] = _strdup("..");
+		command.args[1] = strdup("..");
 
 	cd_to(&command);
 
