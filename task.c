@@ -29,10 +29,10 @@ int main(int ac, char **av, char *env[])
 
 	UNUSED(av);
 	UNUSED(ac);
-	set_data(&data, env);
 	signal(SIGINT, get_sigint);
 	while (1)
 	{
+		set_data(&data, env);
 		if (is_interact)
 			printf("$ "), fflush(stdout);
 		if (getline(&buffer, &buf_size, stdin) == -1)
