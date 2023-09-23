@@ -67,7 +67,6 @@ char *error_not_found(char **args, char *cmd, int counter)
 	strncat(error, ": ", 3);
 	strncat(error, args[0], strlen(args[0]));
 	strncat(error, ": not found\n", 13);
-	strncat(error, "\0", 1);
 
 	free(ver_str);
 
@@ -106,7 +105,6 @@ char *error_exit_shell(char **args, char *cmd, int counter)
 	strncat(error, ": Illegal number: ", 19);
 	strncat(error, args[1], strlen(args[1]));
 	strncat(error, "\n", 3);
-	strncat(error, "\0", 1);
 
 	free(ver_str);
 
@@ -132,7 +130,6 @@ char *error_env(char **args, char *cmd, int counter)
 	length = strlen(cmd) + strlen(ver_str) + strlen(args[0]) +
 			strlen(msg) + 4;
 	error = malloc(sizeof(char) * (length + 1));
-
 	if (error == NULL) /* Using NULL for clarity instead of '0'. */
 	{
 		/* If error is NULL (malloc failed), there's no need to free it. */
@@ -146,7 +143,6 @@ char *error_env(char **args, char *cmd, int counter)
 	strncat(error, ": ", 3);
 	strncat(error, args[0], strlen(args[0]));
 	strncat(error, msg, strlen(msg));
-	strncat(error, "\0", 1);
 
 	free(ver_str);
 
@@ -185,7 +181,6 @@ char *error_path_126(char **args, char *cmd, int counter)
 	strncat(error, ": ", 3);
 	strncat(error, args[0], strlen(args[0]));
 	strncat(error, ": Permission denied\n", 24);
-	strncat(error, "\0", 1);
 
 	free(ver_str);
 
