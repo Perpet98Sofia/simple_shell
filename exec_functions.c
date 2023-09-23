@@ -16,11 +16,11 @@ char *find_executable(char *command, char **envp)
 	for (i = 0; envp[i] != NULL && path_env == NULL; i++)
 	{
 		if (_strncmp(envp[i], "PATH=", 5) == 0)
-			path_env = strdup(envp[i] + 5);
+			path_env = _strdup(envp[i] + 5);
 	}
 	if (path_env != NULL)
 	{
-		token = strtok(strdup(path_env), ":");
+		token = strtok(_strdup(path_env), ":");
 		while (token)
 		{
 			token_len = strlen(token);

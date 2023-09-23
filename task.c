@@ -73,7 +73,7 @@ int execute(data_shell command)
 		if (exec)
 		{
 			found = 1;
-			command.args[0] = strdup(exec);
+			command.args[0] = _strdup(exec);
 			free(exec);
 		}
 	}

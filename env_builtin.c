@@ -37,7 +37,7 @@ int built_in_setenv(data_shell command)
 		*end_env = malloc(sizeof(char *) * (size_t)(sizeof(end_env) + 1));
 		if (*end_env == NULL)
 			return (-1);
-		*end_env = strdup(new_var);
+		*end_env = _strdup(new_var);
 		end_env++;
 		*end_env = NULL;
 		return (0);
