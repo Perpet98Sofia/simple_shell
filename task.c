@@ -42,11 +42,12 @@ int main(int ac, char **av, char *env[])
 			for (; k < MAX_ARGS; k++)
 				data.av[k] = NULL;
 			split_commands(&data, buffer);
-			free(data.input);
+			free_data(&data);
 			data.counter++;
 		}
 	}
-	free_data(&data);
+	for (i = 0; datash->_environ[i]; i++)
+		free(datash->_environ[i]);
 	free(buffer);
 
 	return (0);
@@ -61,7 +62,7 @@ int main(int ac, char **av, char *env[])
 int execute(data_shell command)
 {
 	int status, found = 0;
-	char *exec;
+	char *exec = NULL;
 
 	if (access(command.args[0], X_OK) == 0)
 		found = 1;
@@ -72,6 +73,7 @@ int execute(data_shell command)
 		{
 			found = 1;
 			command.args[0] = _strdup(exec);
+			free(exec);
 		}
 	}
 	if (found == 1)
