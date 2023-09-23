@@ -14,7 +14,10 @@ int built_in_exit(data_shell command)
 	{
 		status = atoi(command.args[1]);
 		if (status != 0)
+		{
+			free_data(&command);
 			exit(status);
+		}
 		else
 		{
 			command.status = 2;
@@ -23,6 +26,9 @@ int built_in_exit(data_shell command)
 		}
 	}
 	else
+	{
+		free_data(&command);
 		exit(0);
+	}
 	return (0);
 }
