@@ -67,6 +67,8 @@ int execute(data_shell command)
 
 	if (access(command.args[0], X_OK) == 0)
 		found = 1;
+	else if (access(command.args[0], F_OK) != 0)
+		command.status = 2;
 	else
 	{
 		exec = find_executable(command.args[0], command._environ);
